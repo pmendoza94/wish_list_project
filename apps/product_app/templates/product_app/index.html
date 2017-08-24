@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My Wish List</title>
+		<style>
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 75%;
+		}
+
+		td, th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #dddddd;
+		}
+		</style>
+	</head>
+	<body>
+		<br>
+		<header>
+			<div style="float: right;">
+				<a href="/logout">Logout</a>
+			</div>
+		</header>
+		<br>
+
+		<h1>Welcome, {{request.session.user_name}} !</h1>
+		<br><br>
+
+		<h3>Your Wish List:</h3>
+		<table>
+			<tr>
+				<td><b>Item</b></td>
+				<td><b>Added By</b></td>
+				<td><b>Date Added</b></td>
+				<td><b>Action</b></td>
+			</tr>
+			{%for product in products%}
+				{%if product in user.users.all and user != product.added_by.first %}
+			<tr>
+				<td><a href="/wishlist/wish_item/{{product.id}}">{{product.product_name}}</a></td>
+				<td>{{product.user.name}}</td>
+				<td>{{product.created_at}}</td>
+				<td><a href="/wishlist/remove/{{product.id}}/{{request.session.user_id}}">Remove from my Wishlist</a></td>
+			</tr>
+				{%endif%}
+
+				{%if user == product.added_by.first%}
+			<tr>
+				<td><a href="/wishlist/wish_item/{{product.id}}">{{product.product_name}}</a></td>
+				<td>{{product.user.name}}</td>
+				<td>{{product.created_at}}</td>
+				<td><a href="/wishlist/delete/{{product.id}}/{{request.session.user_id}}">Delete</a></td>
+			</tr>
+				{%endif%}
+
+			{%endfor%}
+
+
+
+
+		</table>
+		<br><br>
+
+		<h3>Other User's Wish List:</h3>
+		<table>
+			<tr>
+				<td><b>Item</b></td>
+				<td><b>Added By</b></td>
+				<td><b>Date Added</b></td>
+				<td><b>Action</b></td>
+			</tr>
+			{%for x in products%}
+				{%if not x in user.users.all%}
+			<tr>
+				<td><a href="/wishlist/wish_item/{{x.id}}">{{x.product_name}}</a></td>
+				<td>{{x.users.name}}</td>
+				<td>{{x.created_at}}</td>
+				<td><a href="/wishlist/add/{{x.id}}/{{request.session.user_id}}">Add to my Wishlist</a></td>
+			</tr>
+				{%endif%}
+			{%endfor%}
+		</table>
+		<br><br>
+
+		<div style="float: right;">
+			<a href="/wishlist/create">Add Item</a>
+		</div>
+	</body>
+</html>

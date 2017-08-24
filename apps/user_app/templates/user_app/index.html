@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Login and Registration</title>
+	</head>
+	<body>
+		<br><br>
+
+		{%if messages%}
+			{%for message in messages%}
+				{%if message.tags == 'error'%}
+					<p style="color: red">{{message}}</p>
+				{%endif%}
+				{%if message.tags == 'success'%}
+					<p style="color: green">{{message}}</p>
+				{%endif%}
+			{%endfor%}
+		{%endif%}
+
+		<h1>Registration</h1>
+		<br>
+		<form action="/register" method="post">
+		{%csrf_token%}
+			<table>
+				<tr>
+					<td><label>Name: </label></td>
+					<td><input type="text" name="name" placeholder="Enter your name."></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td><label>Username: </label></td>
+					<td><input type="text" name="username" placeholder="Enter your username."></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td><label>Password: </label></td>
+					<td><input type="password" name="password" placeholder="Enter a password."></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td><label>Confirm Password: </label></td>
+					<td><input type="password" name="con_password" placeholder="Re-enter password."></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td><label>Date Hired: </label></td>
+					<td><input type="date" name="date_hired"></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Register" style="margin-left: 70px;"></td>
+				</tr>
+			</table>
+		</form>
+
+		<br><br>
+
+		<h1>Login</h1>
+		<form action="/login" method="post">
+		{%csrf_token%}
+			<table>
+				<tr>
+					<td><label>Username: </label></td>
+					<td><input type="text" name="username" placeholder="Enter your username."></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td><label>Password: </label></td>
+					<td><input type="password" name="password" placeholder="Enter your password."></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" name="login" value="Login" style="margin-left: 85px;"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

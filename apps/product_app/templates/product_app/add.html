@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Create Item</title>
+	</head>
+	<body>
+		<br>
+		<header>
+			<div style="float: right;">
+				<a href="/wishlist">Home</a> |
+				<a href="/logout">Logout</a>
+			</div>
+		</header>
+		<br>
+
+		<h2>Create a New Wish List Item:</h2>
+
+		{%if messages%}
+			{%for message in messages%}
+				{%if message.tags == 'error'%}
+					<p style="color: red">{{message}}</p>
+				{%endif%}
+			{%endfor%}
+		{%endif%}
+
+		<form action="/wishlist/create_process" method="post">
+		{%csrf_token%}
+			<label>Item/Product:</label>
+			<input type="text" name="product_name" placeholder="Enter your item/product.">
+			<br><br>
+
+			<input type="submit" value="Add">
+		</form>
+	</body>
+</html>
